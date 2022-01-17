@@ -5,3 +5,13 @@
     color: white;
     background-color: navy;
 }
+
+li.nav-item {
+    padding-right: 15px;
+}
+.modal-preauth {
+    display: block;
+}
+.modal-postauth {
+    display: none;
+}
