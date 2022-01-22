@@ -1,5 +1,5 @@
 export const html = `
-<h1> Welcome to Awsome Discussion Forum</h1>
+<h1> Welcome to Awesome Discussion Forum</h1>
 Please sign in to do:
 <ul>
     <li> To Create a thread</li>
