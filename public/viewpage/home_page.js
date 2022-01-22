@@ -6,6 +6,7 @@ import { Thread } from '../model/thread.js';
 import * as Constants from '../model/constants.js'
 import * as FirestoreController from '../controller/firestore_controller.js'
 import * as Util from './util.js'
+import * as ThreadPage from './thread_page.js'
 
 export function addEventListeners() {
     Elements.menuHome.addEventListener('click', async () => {
@@ -22,6 +23,10 @@ export function addEventListeners() {
 
 async function addNewThread(e){
     e.preventDefault();
+
+    const createButton = e.target.getElementsByTagName('button')[0];
+    const label = Util.disableButton(createButton);
+
     const title = e.target.title.value;
     const content = e.target.content.value;
     const keywords = e.target.keywords.value;
@@ -42,6 +47,10 @@ async function addNewThread(e){
         trTag.innerHTML = buildThreadView(thread);        
         const tableBodyTag = document.getElementById('thread-view-table-body');
         tableBodyTag.prepend(trTag);
+// attach event listener to the new thread form
+const viewForms = document.getElementsByClassName('thread-view-form');
+
+ThreadPage.attachViewFormEventListener(viewForms[0]);
         e.target.reset(); // clears entries in the form
         const noThreadFound = document.getElementById('no-thread-found');
         if (noThreadFound) {
@@ -52,6 +61,8 @@ async function addNewThread(e){
         if (Constants.DEV) console.log(e);
         Util.info('Failed', JSON.stringify(e), Elements.modalCreateThread);
     }
+
+    Util.enableButton(createButton, label);
 }
 
 export async function home_page() {
@@ -110,11 +121,19 @@ function buildHomeScreen(threadList) {
         }
 
         Elements.root.innerHTML = html;
+
+        // attach event listeners to view buttons
+        ThreadPage.addViewFormEvents();
 }
 
 function buildThreadView(thread){
     return `
-        <td>View</td>
+        <td>
+        <form method="post" class="thread-view-form">
+        <input type="hidden" name="threadId" value="${thread.docId}">
+        <button type="submit" class="btn btn-outline-primary">View</button>
+        </form>
+        </td>
         <td>${thread.title}</td>
         <td>${!thread.keywordsArray || !Array.isArray(thread.keywordsArray) ? '' : thread.keywordsArray.join(' ')}</td>
         <td>${thread.email}</td>
