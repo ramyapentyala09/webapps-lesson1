@@ -5,6 +5,9 @@ export class Reply {
         this.email = data.email;
         this.timestamp = data.timestamp;
         this.content = data.content;
+        //for deleting all replies when the thread is deleted
+        //for security rules
+        //this.uid_thread
     }
     set_docId(id) {
         this.docId = id;

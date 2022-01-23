@@ -6,4 +6,11 @@ Please sign in to do:
     <li> To browse thread</li>
     <li> To reply messages to thread</li>
 </ul>
+
+No Account Yet?
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-create-account">
+  Create Account
+</button>
 `
